@@ -12,7 +12,10 @@ const queue = require('async/queue')
 
 const LIST_URL = 'https://api.tuwan.com/apps/Welfare/getMenuList?format=json&page=1'
 const DETAIL_URL = 'https://api.tuwan.com/apps/Welfare/detail?format=json&id=1292&'
+<<<<<<< HEAD
 const re = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/
+=======
+>>>>>>> d5d0520b34907d5fedfc0b65ccaca4c4e4889cc5
 
 
 /**
@@ -71,7 +74,11 @@ async function saveFile (remoteUrl, dir) {
     responseType: 'stream'
   })
   response.data.pipe(fs.createWriteStream(dir))
+<<<<<<< HEAD
     .on('close', () => signale.info('close'))
+=======
+    .on('close', () => signale.info(`${dir} 完成`))
+>>>>>>> d5d0520b34907d5fedfc0b65ccaca4c4e4889cc5
     .on('error', error => signale.error(error))
 
 }
@@ -92,7 +99,11 @@ function getBigPic (thumbUrl) {
 const q = queue(async function(task, callback) {
   await saveFile(task.img, task.name)
   callback()
+<<<<<<< HEAD
 }, 16)
+=======
+}, 8)
+>>>>>>> d5d0520b34907d5fedfc0b65ccaca4c4e4889cc5
 
 q.drain = function() {
   signale.info('all items have been processed')
@@ -105,16 +116,26 @@ async function start() {
       const detail = await getDetail(img.id)
       const thumb = detail.thumb
       const title = detail.title
+<<<<<<< HEAD
       fs.stat(`./assets/${title}-${detail.id}`,function(err){
         if (err) {
           fs.mkdirSync(`./assets/${title}-${detail.id}`)
+=======
+      fs.stat(`/Users/xiadd/Dropbox/imgs/${title}-${detail.id}`,function(err){
+        if (err) {
+          fs.mkdirSync(`/Users/xiadd/Dropbox/imgs/${title}-${detail.id}`)
+>>>>>>> d5d0520b34907d5fedfc0b65ccaca4c4e4889cc5
         }
       })
       
       thumb.forEach((img, index) => {
         const bigPicUrl = getBigPic(img)
         q.push({
+<<<<<<< HEAD
           name: `./assets/${title}-${detail.id}/${index}.jpg`,
+=======
+          name: `/Users/xiadd/Dropbox/imgs/${title}-${detail.id}/${index}.jpg`,
+>>>>>>> d5d0520b34907d5fedfc0b65ccaca4c4e4889cc5
           img:bigPicUrl
         }, () => {})
       })
